@@ -18,11 +18,10 @@ class Routes {
         builder: (_) => Scaffold(
               body: Container(
                 child: Center(
-                    child: Text('Page not found!',
+                    child: Text('Pagina non trovata!',
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 30,
-                          fontWeight: FontWeight.bold,
                         ))),
               ),
             ));
