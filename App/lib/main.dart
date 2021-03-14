@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 title,
                 style: GoogleFonts.mcLaren(),
               ),
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: Color(0xFF5c687d),
             ),
             body: Column(
               children: <Widget>[
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           height: 100.0,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.blueGrey,
+                                primary: Color(0xFF28435F)
                               ),
                               onPressed: () {
                                 if (prova(index))
