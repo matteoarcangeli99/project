@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:coex_clover/model/aule.dart';
 import 'package:coex_clover/services/rest_api/drone_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   DroneApi droneApi;
-  List<String> aule = [
-    "Aula1",
-    "Aula2",
-    "Aula3",
-    "Laboratorio"
-  ];
 
   @override
   void initState() {
@@ -60,24 +54,23 @@ class _HomeState extends State<Home> {
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF28435F)),
                               onPressed: () async {
-                                if(!await droneApi.goTo(""))
+                                if (!await droneApi.goTo(Aule.values[index]))
                                   awesomeDialog(context, "DRONE IN MOVIMENTO",
                                       "Attendi il ritorno");
                               },
-                              child:
-                              RichText(
+                              child: RichText(
                                 text: TextSpan(
                                   style: GoogleFonts.mcLaren(),
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: aule[index],
+                                        text:
+                                            Aule.values[index].toShortString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ],
                                 ),
-                              )
-                              ),
-                          ),
+                              )),
+                        ),
                       );
                     }),
                   ),
