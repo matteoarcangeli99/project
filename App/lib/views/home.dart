@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    droneApi = DroneApi();
+    droneApi = DroneApi("http://localhost:8090/api/prova/prova");
   }
 
   Widget build(BuildContext context) {
