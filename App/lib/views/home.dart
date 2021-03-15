@@ -54,9 +54,17 @@ class _HomeState extends State<Home> {
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF28435F)),
                               onPressed: () async {
-                                if (!await droneApi.goTo(Aule.values[index]))
-                                  awesomeDialog(context, "DRONE IN MOVIMENTO",
-                                      "Attendi il ritorno");
+                                try {
+                                  if (await droneApi.goTo(Aule.values[index]))
+                                    awesomeDialog(
+                                        context,
+                                        DialogType.INFO,
+                                        "DRONE IN MOVIMENTO",
+                                        "Attendi il ritorno");
+                                } on Exception catch (exception) {
+                                  awesomeDialog(context, DialogType.ERROR,
+                                      "ERRORE", exception.toString());
+                                }
                               },
                               child: RichText(
                                 text: TextSpan(
@@ -81,10 +89,11 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  AwesomeDialog awesomeDialog(
-      BuildContext context, String titolo, String descrizione) {
+  AwesomeDialog awesomeDialog(BuildContext context, DialogType dialogType,
+      String titolo, String descrizione) {
     return AwesomeDialog(
       context: context,
+      dialogType: dialogType,
       headerAnimationLoop: true,
       animType: AnimType.SCALE,
       title: titolo,
