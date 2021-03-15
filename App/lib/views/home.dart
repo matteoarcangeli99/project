@@ -53,19 +53,8 @@ class _HomeState extends State<Home> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF28435F)),
-                              onPressed: () async {
-                                try {
-                                  if (await droneApi.goTo(Aule.values[index]))
-                                    awesomeDialog(
-                                        context,
-                                        DialogType.INFO,
-                                        "DRONE IN MOVIMENTO",
-                                        "Attendi il ritorno");
-                                } on Exception catch (exception) {
-                                  awesomeDialog(context, DialogType.ERROR,
-                                      "ERRORE", exception.toString());
-                                }
-                              },
+                              onPressed: () =>
+                                  onTap(context, Aule.values[index]),
                               child: RichText(
                                 text: TextSpan(
                                   style: GoogleFonts.mcLaren(),
@@ -83,10 +72,20 @@ class _HomeState extends State<Home> {
                     }),
                   ),
                 ),
-                Image.asset('assets/unicam.png', scale: 1.5),
-                SizedBox(height: 25),
+                Image.asset('assets/unicam.png', scale: 1.30),
+                SizedBox(height: 30),
               ],
             )));
+  }
+  
+  Future<void> onTap(BuildContext context, Aule aula) async {
+    try {
+      if (await droneApi.goTo(aula))
+        awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
+            "Attendi il ritorno");
+    } on Exception catch (exception) {
+      awesomeDialog(context, DialogType.ERROR, "ERRORE", exception.toString());
+    }
   }
 
   AwesomeDialog awesomeDialog(BuildContext context, DialogType dialogType,
@@ -98,7 +97,7 @@ class _HomeState extends State<Home> {
       animType: AnimType.SCALE,
       title: titolo,
       desc: descrizione,
-      autoHide: Duration(seconds: 5),
+      autoHide: Duration(seconds: 4),
     )..show();
   }
 }
