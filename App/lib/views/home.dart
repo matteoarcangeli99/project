@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                                   children: <TextSpan>[
                                     TextSpan(
                                         text:
-                                            Aule.values[index].toSpacedString(),
+                                            Aule.values[index].toSpaceString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ],

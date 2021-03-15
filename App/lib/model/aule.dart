@@ -7,7 +7,7 @@ extension ParseToString on Aule {
     return this.toString().split('.').last;
   }
 
-  String toSpacedString() {
+  String toSpaceString() {
     var index = toShortString().indexOf(RegExp('[0-9]'));
     if (index != -1)
       return StringUtils.addCharAtPosition(toShortString(), ' ', index);
