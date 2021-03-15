@@ -25,6 +25,7 @@ dependencies:
     sdk: flutter
   google_fonts: ^2.0.0
   http: ^0.13.0
+  basic_utils: ^3.0.0-null-safety.1
 
 
   # The following adds the Cupertino Icons font to your application.

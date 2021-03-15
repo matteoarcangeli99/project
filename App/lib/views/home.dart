@@ -54,14 +54,14 @@ class _HomeState extends State<Home> {
                               style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF28435F)),
                               onPressed: () =>
-                                  onTap(context, Aule.values[index]),
+                                  onButtonTap(context, Aule.values[index]),
                               child: RichText(
                                 text: TextSpan(
                                   style: GoogleFonts.mcLaren(),
                                   children: <TextSpan>[
                                     TextSpan(
                                         text:
-                                            Aule.values[index].toShortString(),
+                                            Aule.values[index].toSpacedString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ],
@@ -77,8 +77,8 @@ class _HomeState extends State<Home> {
               ],
             )));
   }
-  
-  Future<void> onTap(BuildContext context, Aule aula) async {
+
+  Future<void> onButtonTap(BuildContext context, Aule aula) async {
     try {
       if (await droneApi.goTo(aula))
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
