@@ -1,7 +1,8 @@
-import 'package:coex_clover/services/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'views/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,8 +18,7 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/',
-      onGenerateRoute: Routes.routes,
+      home: Home(),
     );
   }
 }
