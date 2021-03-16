@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'file:///C:/Users/matte/Desktop/project/App/lib/services/drone_api.dart';
+import 'package:coex_clover/services/drone_api.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
