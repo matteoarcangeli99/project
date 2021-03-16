@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
                 title,
                 style: GoogleFonts.mcLaren(),
               ),
-              backgroundColor: Color(0xFF5c687d),
+              backgroundColor: Color(0xFF28435F),
             ),
             body: Column(
               children: <Widget>[
