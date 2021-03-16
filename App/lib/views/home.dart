@@ -27,7 +27,11 @@ class _HomeState extends State<Home> {
     droneApi = DroneApi("http://localhost:8090/api/prova/prova");
   }
 
+
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 250) /2;
+    final double itemWidth = size.width / 2;
     final title = 'Selezionare l\'aula';
     return MaterialApp(
         title: title,
@@ -45,6 +49,7 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
+                    childAspectRatio: (itemWidth / itemHeight),
                     children: List.generate(4, (index) {
                       return Center(
                         child: SizedBox(
@@ -73,7 +78,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Image.asset('assets/unicam.png', scale: 1.30),
-                SizedBox(height: 30),
+                SizedBox(
+                    height:MediaQuery.of(context).size.height * 0.01
+                ),
               ],
             )));
   }
