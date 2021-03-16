@@ -1,10 +1,10 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:coex_clover/model/aule.dart';
+import 'package:coex_clover/services/drone_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:coex_clover/services/drone_api.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -27,17 +27,14 @@ class _HomeState extends State<Home> {
     droneApi = DroneApi("http://localhost:8090/api/prova/prova");
   }
 
-
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 250) /2;
-    final double itemWidth = size.width / 2;
     final title = 'Selezionare l\'aula';
     return MaterialApp(
         title: title,
         home: Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              brightness: Brightness.dark,
               title: Text(
                 title,
                 style: GoogleFonts.mcLaren(),
@@ -49,7 +46,11 @@ class _HomeState extends State<Home> {
                 Expanded(
                   child: GridView.count(
                     crossAxisCount: 2,
-                    childAspectRatio: (itemWidth / itemHeight),
+                    childAspectRatio: ((MediaQuery.of(context).size.width / 2) /
+                        ((MediaQuery.of(context).size.height -
+                                kToolbarHeight -
+                                250) /
+                            2)),
                     children: List.generate(4, (index) {
                       return Center(
                         child: SizedBox(
@@ -68,7 +69,8 @@ class _HomeState extends State<Home> {
                                         text:
                                             Aule.values[index].toSpaceString(),
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold)),
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFFFFFFFF))),
                                   ],
                                 ),
                               )),
@@ -78,9 +80,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 Image.asset('assets/unicam.png', scale: 1.30),
-                SizedBox(
-                    height:MediaQuery.of(context).size.height * 0.01
-                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
               ],
             )));
   }
