@@ -28,15 +28,14 @@ class _HomeState extends State<Home> {
   }
 
   Widget build(BuildContext context) {
-    final title = 'Selezionare l\'aula';
     return MaterialApp(
-        title: title,
+        title: 'Coex Clover',
         home: Scaffold(
             appBar: AppBar(
               centerTitle: true,
               brightness: Brightness.dark,
               title: Text(
-                title,
+                'Selezionare l\'aula',
                 style: GoogleFonts.mcLaren(),
               ),
               backgroundColor: Color(0xFF28435F),
