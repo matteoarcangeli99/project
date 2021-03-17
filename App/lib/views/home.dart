@@ -87,15 +87,19 @@ class _HomeState extends State<Home> {
   Future<void> onButtonTap(BuildContext context, Aule aula) async {
     try {
       if (await droneApi.goTo(aula))
+        awesomeDialog(context, DialogType.INFO, "AVVIO DRONE",
+            "Segui il drone, ti indicherà la strada", 6);
+      else
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
-            "Attendi il ritorno");
+            "Attendi il ritorno", 5);
+
     } on Exception catch (exception) {
-      awesomeDialog(context, DialogType.ERROR, "ERRORE", exception.toString());
+      awesomeDialog(context, DialogType.ERROR, "ERRORE", exception.toString(), 4);
     }
   }
 
   AwesomeDialog awesomeDialog(BuildContext context, DialogType dialogType,
-      String titolo, String descrizione) {
+      String titolo, String descrizione, int seconds) {
     return AwesomeDialog(
       context: context,
       dialogType: dialogType,
@@ -103,7 +107,7 @@ class _HomeState extends State<Home> {
       animType: AnimType.SCALE,
       title: titolo,
       desc: descrizione,
-      autoHide: Duration(seconds: 4),
+      autoHide: Duration(seconds: seconds),
     )..show();
   }
 }
