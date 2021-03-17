@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
   Future<void> onButtonTap(BuildContext context, Aule aula) async {
     try {
       if (await droneApi.goTo(aula))
-        awesomeDialog(context, DialogType.INFO, "AVVIO DRONE",
+        awesomeDialog(context, DialogType.SUCCES, "AVVIO DRONE",
             "Segui il drone, ti indicherà la strada", 6);
       else
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
