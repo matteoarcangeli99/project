@@ -92,9 +92,9 @@ class _HomeState extends State<Home> {
       else
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
             "Attendi il ritorno", 5);
-
     } on Exception catch (exception) {
-      awesomeDialog(context, DialogType.ERROR, "ERRORE", exception.toString(), 4);
+      awesomeDialog(
+          context, DialogType.ERROR, "ERRORE", exception.toString(), 4);
     }
   }
 
