@@ -5,30 +5,104 @@ const {PythonShell} =require('python-shell');
   
 var occupato=false;
 
-router.get("/test", (req, res, next)=>{ 
-    console.log(occupato)
+router.get("/stato", (_req, res)=>{ 
     if(occupato)
        res.sendStatus(403);
     else
-    {
-    res.sendStatus(200);
+      res.sendStatus(200);
+});
 
-    occupato=true;
+router.get("/aula1", (_req)=>{ 
+  occupato=true;
 
-    let options = {
-        mode: 'text',
-        pythonPath: '/usr/bin/python',
-        pythonOptions: ['-u'],
-        scriptPath: '/home/clover/Desktop/backend/api/script',
-      };
+  let options = {
+    mode: 'text',
+    pythonPath: '/usr/bin/python',
+    pythonOptions: ['-u'],
+    scriptPath: '/home/clover/Desktop/backend/api/script',
+  };
 
-    PythonShell.run('Drone.py', options, function (err) {
-      occupato=false;
-        if (err){
-          console.log(err);
-        }
-      });
+PythonShell.run('aula1.py', options, function (err) {
+    if (err){
+      console.log(err);
     }
+  });
+
+  occupato=false;
+});
+
+router.get("/aula2", (_req)=>{ 
+  occupato=true;
+
+  let options = {
+    mode: 'text',
+    pythonPath: '/usr/bin/python',
+    pythonOptions: ['-u'],
+    scriptPath: '/home/clover/Desktop/backend/api/script',
+  };
+
+PythonShell.run('aula2.py', options, function (err) {
+    if (err){
+      console.log(err);
+    }
+  });
+
+  occupato=false;
+});
+
+router.get("/aula3", (_req)=>{ 
+  occupato=true;
+
+  let options = {
+    mode: 'text',
+    pythonPath: '/usr/bin/python',
+    pythonOptions: ['-u'],
+    scriptPath: '/home/clover/Desktop/backend/api/script',
+  };
+
+PythonShell.run('aula3.py', options, function (err) {
+    if (err){
+      console.log(err);
+    }
+  });
+
+  occupato=false;
+});
+
+router.get("/laboratorio", (_req)=>{ 
+  occupato=true;
+
+  let options = {
+    mode: 'text',
+    pythonPath: '/usr/bin/python',
+    pythonOptions: ['-u'],
+    scriptPath: '/home/clover/Desktop/backend/api/script',
+  };
+
+PythonShell.run('laboratorio.py', options, function (err) {
+    if (err){
+      console.log(err);
+    }
+  });
+  occupato=false;
+});
+
+router.get("/led", (_req)=>{ 
+  occupato=true;
+
+  let options = {
+    mode: 'text',
+    pythonPath: '/usr/bin/python',
+    pythonOptions: ['-u'],
+    scriptPath: '/home/clover/Desktop/backend/api/script',
+  };
+
+PythonShell.run('led.py', options, function (err) {
+    if (err){
+      console.log(err);
+    }
+  });
+  occupato=false;
 });
 
 module.exports = router;
