@@ -8,9 +8,15 @@ class DroneApi {
     _urlServer = urlServer;
   }
 
-  Future<bool> goTo(Aule aula) async {
+  void goTo(Aule aula) async {
+    await http.get(
+      Uri.parse("$_urlServer/" + aula.toShortString()),
+    );
+  }
+
+  Future<bool> status() async {
     var response = await http.get(
-      Uri.parse(/*"$_urlServer/" + aula.toShortString()*/'http://192.168.189.130:8090/drone/test'),
+      Uri.parse("$_urlServer/stato"),
     );
     return response.statusCode == 200;
   }

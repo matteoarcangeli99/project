@@ -12,7 +12,7 @@ router.get("/stato", (_req, res)=>{
       res.sendStatus(200);
 });
 
-router.get("/aula1", (_req)=>{ 
+router.get("/aula1", (_req, res)=>{ 
   occupato=true;
 
   let options = {
@@ -24,7 +24,7 @@ router.get("/aula1", (_req)=>{
 
 PythonShell.run('aula1.py', options, function (err) {
     if (err){
-      console.log(err);
+      res.sendStatus(500, err.message);
     }
   });
 
@@ -80,24 +80,6 @@ router.get("/laboratorio", (_req)=>{
   };
 
 PythonShell.run('laboratorio.py', options, function (err) {
-    if (err){
-      console.log(err);
-    }
-  });
-  occupato=false;
-});
-
-router.get("/led", (_req)=>{ 
-  occupato=true;
-
-  let options = {
-    mode: 'text',
-    pythonPath: '/usr/bin/python',
-    pythonOptions: ['-u'],
-    scriptPath: '/home/clover/Desktop/backend/api/script',
-  };
-
-PythonShell.run('led.py', options, function (err) {
     if (err){
       console.log(err);
     }
