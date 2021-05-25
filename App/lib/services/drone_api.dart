@@ -8,16 +8,11 @@ class DroneApi {
     _urlServer = urlServer;
   }
 
-  void goTo(Aule aula) async {
-    await http.get(
-      Uri.parse("$_urlServer/" + aula.toShortString()),
-    );
-  }
-
-  Future<bool> status() async {
+  Future<int> goTo(Aule aula) async {
+    print("$_urlServer/" + aula.toShortString().toLowerCase());
     var response = await http.get(
-      Uri.parse("$_urlServer/stato"),
+      Uri.parse("$_urlServer/" + aula.toShortString().toLowerCase()),
     );
-    return response.statusCode == 200;
+    return response.statusCode;
   }
 }

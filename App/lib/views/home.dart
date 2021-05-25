@@ -1,5 +1,4 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:coex_clover/controller/drone_controller.dart';
 import 'package:coex_clover/model/aule.dart';
 import 'package:coex_clover/services/drone_api.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  DroneController _droneController;
+  DroneApi _droneApi;
 
   @override
   void initState() {
@@ -25,7 +24,8 @@ class _HomeState extends State<Home> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    _droneController = DroneController("http://192.168.11.1:8090/drone");
+    // _droneApi = DroneApi("http://192.168.11.1:8090/drone");
+    _droneApi = DroneApi("http://localhost:8091/drone");
   }
 
   Widget build(BuildContext context) {
@@ -87,9 +87,13 @@ class _HomeState extends State<Home> {
 
   Future<void> onButtonTap(BuildContext context, Aule aula) async {
     try {
-      if (!await _droneController.navigate(aula))
+      var ris = await _droneApi.goTo(aula);
+      if (ris == 300)
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
             "Attendi il ritorno", 5);
+      else if (ris == 200)
+        awesomeDialog(
+            context, DialogType.SUCCES, "AVVIO DRONE", "Segui il drone", 5);
     } on Exception catch (exception) {
       awesomeDialog(
           context, DialogType.ERROR, "ERRORE", exception.toString(), 4);
