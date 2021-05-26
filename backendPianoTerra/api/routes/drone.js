@@ -3,34 +3,42 @@ const router = express.Router();
 
 const http = require('http');
 
-const {PythonShell} =require('python-shell'); 
-  
-var occupato=false;
+const {
+  PythonShell
+} = require('python-shell');
 
-// Sta al secondo piano
-router.get("/aula1", (_req, res)=>{ 
-  if(occupato)
-  {   
-    res.sendStatus(403);
+var occupato = false;
+
+/* Controlla lo stato del drone principale e del secondario (se richiesto)
+ * ritorna al chiamante 
+ * 200 --> se entrambi sono disponibili
+ * 403 --> se almeno uno dei due non è disponibile
+ * 500 --> se si è verificato un errore imprevisto nella comunicazione col secondo drone
+ */
+function checkStatus(res, secondario) {
+  console.log("Occupato: " + occupato);
+  console.log("Secondario: " + secondario);
+
+  if (occupato) { // Controllo lo stato del drone principale
+    return res.sendStatus(403);
   }
-    else 
-    {
-     http.get('http://localhost:8091/drone/aula1', (resp) => {
-       if(resp.statusCode == 200)
-        res.sendStatus(200);
-      else
-        res.sendStatus(403);
-    }).on("error", (err) => {
-      res.sendStatus(403);
+  if (secondario) { // se necessario controllo il secondario
+    http.get('http://localhost:8091/drone/stato', (resp) => {
+      if (resp.statusCode == 403)
+        return res.sendStatus(403);
+      console.log(200);
+    }).on("error", () => {
+      return res.sendStatus(500);
     });
-    }
+  }
+  res.sendStatus(200);
+  occupato = true;
+}
 
-  occupato=false;
-});
-
-router.get("/aula2", (_req)=>{ 
-  occupato=true;
-
+/*
+ * Invoca lo sciprt Python passato come parametro
+ */
+function invokePythonScript(scriptName) {
   let options = {
     mode: 'text',
     pythonPath: '/usr/bin/python',
@@ -38,50 +46,38 @@ router.get("/aula2", (_req)=>{
     scriptPath: '/home/clover/Desktop/backend/api/script',
   };
 
-PythonShell.run('aula2.py', options, function (err) {
-    if (err){
+  PythonShell.run(scriptName, options, function (err) {
+    if (err) {
       console.log(err);
     }
   });
+}
 
-  occupato=false;
+function vola(res, secondo, endpoint, scriptName) {
+  checkStatus(res, secondo);
+  if (secondo) {
+    setTimeout(function () {
+      http.get('http://localhost:8091/drone/' + endpoint, () => {});
+    }, 3000);
+  }
+  //invokePythonScript(sciprtName); 
+  occupato = false;
+}
+
+router.get("/aula1", (_req, res) => {
+  vola(res, true, 'stato', 'aula1.py');
 });
 
-router.get("/aula3", (_req)=>{ 
-  occupato=true;
-
-  let options = {
-    mode: 'text',
-    pythonPath: '/usr/bin/python',
-    pythonOptions: ['-u'],
-    scriptPath: '/home/clover/Desktop/backend/api/script',
-  };
-
-PythonShell.run('aula3.py', options, function (err) {
-    if (err){
-      console.log(err);
-    }
-  });
-
-  occupato=false;
+router.get("/aula2", (_req, res) => {
+  res.setstatus(500);
 });
 
-router.get("/laboratorio", (_req)=>{ 
-  occupato=true;
+router.get("/aula3", (_req, res) => {
+  res.setstatus(500);
+});
 
-  let options = {
-    mode: 'text',
-    pythonPath: '/usr/bin/python',
-    pythonOptions: ['-u'],
-    scriptPath: '/home/clover/Desktop/backend/api/script',
-  };
-
-PythonShell.run('laboratorio.py', options, function (err) {
-    if (err){
-      console.log(err);
-    }
-  });
-  occupato=false;
+router.get("/laboratorio", (_req) => {
+  res.setstatus(500);
 });
 
 module.exports = router;

@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
       DeviceOrientation.portraitUp,
     ]);
     // _droneApi = DroneApi("http://192.168.11.1:8090/drone");
-    _droneApi = DroneApi("http://localhost:8091/drone");
+    _droneApi = DroneApi("http://localhost:8090/drone");
   }
 
   Widget build(BuildContext context) {
@@ -88,12 +88,13 @@ class _HomeState extends State<Home> {
   Future<void> onButtonTap(BuildContext context, Aule aula) async {
     try {
       var ris = await _droneApi.goTo(aula);
-      if (ris == 300)
+      if (ris == 403)
         awesomeDialog(context, DialogType.INFO, "DRONE IN MOVIMENTO",
             "Attendi il ritorno", 5);
       else if (ris == 200)
         awesomeDialog(
             context, DialogType.SUCCES, "AVVIO DRONE", "Segui il drone", 5);
+      else if (ris == 500) throw Exception("Errore imprevisto nel drone");
     } on Exception catch (exception) {
       awesomeDialog(
           context, DialogType.ERROR, "ERRORE", exception.toString(), 4);

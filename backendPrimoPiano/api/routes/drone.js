@@ -3,13 +3,21 @@ const router = express.Router();
 
 const {PythonShell} =require('python-shell'); 
   
-var occupato=false;
+var occupato = false;
+
+router.get("/stato", (_req, res)=>{ 
+  console.log(occupato);
+  if(occupato) {
+    return res.sendStatus(403);
+  }
+  else
+  {
+    //occupato = true;
+    return res.sendStatus(200);
+  }
+});
 
 router.get("/aula1", (_req, res)=>{ 
-  res.sendStatus(300);
-  console.log("OK");
- /* occupato=true;
-
   let options = {
     mode: 'text',
     pythonPath: '/usr/bin/python',
@@ -23,7 +31,7 @@ PythonShell.run('aula1.py', options, function (err) {
     }
   });
 
-  occupato=false;*/
+  occupato=false;
 });
 
 router.get("/aula2", (_req)=>{ 
