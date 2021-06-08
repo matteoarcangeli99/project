@@ -15,7 +15,7 @@ function invokePythonScript(scriptName) {
     mode: 'text',
     pythonPath: '/usr/bin/python',
     pythonOptions: ['-u'],
-    scriptPath: '/home/clover/Desktop/backend/api/script',
+    scriptPath: '/home/pi/backend/api/script',
   };
 
   PythonShell.run(scriptName, options, function (err) {
@@ -35,7 +35,8 @@ router.get("/stato", (_req, res) => {
 });
 
 router.get("/aula1", (_req, res) => {
-  invokePythonScript('aula1');
+  res.sendStatus(200)
+  invokePythonScript('aula1.py');
   occupato = false;
 });
 

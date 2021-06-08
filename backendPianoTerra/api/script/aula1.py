@@ -1,42 +1,31 @@
-from clover import srv
-from std_srvs.srv import Trigger
+# Information: https://clover.coex.tech/led
+
 import rospy
-import math
+from clover.srv import SetLEDEffect
 
-rospy.init_node('flight')
+rospy.init_node('leds')
 
-get_telemetry = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
-navigate = rospy.ServiceProxy('navigate', srv.Navigate)
-land = rospy.ServiceProxy('land', Trigger)
+set_effect = rospy.ServiceProxy('led/set_effect', SetLEDEffect)  # define proxy to ROS-service
 
-def navigate_wait(x=0, y=0, z=0, speed=0.5, frame_id='body', auto_arm=True):
-    res = navigate(x=x, y=y, z=z, speed=speed, frame_id=frame_id, auto_arm=auto_arm)
+print('Fill red')
+set_effect(r=255, g=0, b=0)  # fill strip with red color
+rospy.sleep(2)
 
-    if not res.success:
-        raise Exception(res.message)
+print('Fill green')
+set_effect(r=0, g=100, b=0)  # fill strip with green color
+rospy.sleep(2)
 
-    while not rospy.is_shutdown():
-        telem = get_telemetry(frame_id='navigate_target')
-        if math.sqrt(telem.x ** 2 + telem.y ** 2 + telem.z ** 2) < 0.2:
-           return
-        rospy.sleep(0.2)
+print('Fade to blue')
+set_effect(effect='fade', r=0, g=0, b=255)  # fade to blue color
+rospy.sleep(2)
 
+print('Flash red')
+set_effect(effect='flash', r=255, g=0, b=0)  # flash twice with red color
+rospy.sleep(2)
 
-def land_wait():
-    land()
-    while get_telemetry().armed:
-        rospy.sleep(0.2)
+print('Blink white')
+set_effect(effect='blink', r=255, g=255, b=255)  # blink with white color
+rospy.sleep(5)
 
-def wait_yaw():
-    while not rospy.is_shutdown():
-        telem = get_telemetry(frame_id='navigate_target')
-        if abs(telem.yaw) < math.radians(20):
-            return
-        rospy.sleep(0.2)
-
-navigate_wait(z=2, frame_id='body', auto_arm=True)
-for count in range(4):
-    navigate_wait(x=3, y=0, z=0, frame_id='navigate_target', speed=1)
-    navigate(yaw=math.radians(90), frame_id='navigate_target', auto_arm=True)
-    wait_yaw()
-land_wait()
+print('Rainbow')
+set_effect(effect='rainbow')  # show rainbow

@@ -16,9 +16,6 @@ var occupato = false;
  * 500 --> se si è verificato un errore imprevisto nella comunicazione col secondo drone
  */
 function checkStatus(res, secondario) {
-  console.log("Occupato: " + occupato);
-  console.log("Secondario: " + secondario);
-
   if (occupato) { // Controllo lo stato del drone principale
     return res.sendStatus(403);
   }
@@ -26,13 +23,12 @@ function checkStatus(res, secondario) {
     http.get('http://localhost:8091/drone/stato', (resp) => {
       if (resp.statusCode == 403)
         return res.sendStatus(403);
-      console.log(200);
-    }).on("error", () => {
+    }).on('error', () => {
       return res.sendStatus(500);
     });
-  }
   res.sendStatus(200);
-  occupato = true;
+  //occupato = true;
+}
 }
 
 /*
@@ -43,7 +39,7 @@ function invokePythonScript(scriptName) {
     mode: 'text',
     pythonPath: '/usr/bin/python',
     pythonOptions: ['-u'],
-    scriptPath: '/home/clover/Desktop/backend/api/script',
+    scriptPath: '/home/pi/backend/api/script',
   };
 
   PythonShell.run(scriptName, options, function (err) {
@@ -54,30 +50,31 @@ function invokePythonScript(scriptName) {
 }
 
 function vola(res, secondo, endpoint, scriptName) {
+	console.log('http://90.147.42.46:8091/drone/' + endpoint);
   checkStatus(res, secondo);
-  if (secondo) {
+ /* if (secondo) {
     setTimeout(function () {
-      http.get('http://localhost:8091/drone/' + endpoint, () => {});
+      http.get('http://90.147.42.46:8091/drone/' + endpoint, () => {});
     }, 3000);
-  }
+  }*/
   //invokePythonScript(sciprtName); 
   occupato = false;
 }
 
 router.get("/aula1", (_req, res) => {
-  vola(res, true, 'stato', 'aula1.py');
+  vola(res, true, 'aula1', 'aula1.py');
 });
 
 router.get("/aula2", (_req, res) => {
-  res.setstatus(500);
+  res.sendStatus(500);
 });
 
 router.get("/aula3", (_req, res) => {
-  res.setstatus(500);
+  res.sendStatus(500);
 });
 
 router.get("/laboratorio", (_req) => {
-  res.setstatus(500);
+  res.sendStatus(500);
 });
 
 module.exports = router;

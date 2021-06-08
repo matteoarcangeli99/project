@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  Future<void> onButtonTap(BuildContext context, Aule aula) async {
+  void onButtonTap(BuildContext context, Aule aula) async {
     try {
       var ris = await _droneApi.goTo(aula);
       if (ris == 403)
