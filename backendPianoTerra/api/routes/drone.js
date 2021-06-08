@@ -50,14 +50,14 @@ function invokePythonScript(scriptName) {
 }
 
 function vola(res, secondo, endpoint, scriptName) {
-	console.log('http://90.147.42.46:8091/drone/' + endpoint);
+//	console.log('http://90.147.42.46:8091/drone/' + endpoint);
   checkStatus(res, secondo);
  /* if (secondo) {
     setTimeout(function () {
       http.get('http://90.147.42.46:8091/drone/' + endpoint, () => {});
     }, 3000);
   }*/
-  //invokePythonScript(sciprtName); 
+  invokePythonScript(sciprtName); 
   occupato = false;
 }
 
