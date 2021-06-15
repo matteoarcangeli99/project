@@ -26,9 +26,9 @@ function checkStatus(res, secondario) {
     }).on('error', () => {
       return res.sendStatus(500);
     });
+  }
   res.sendStatus(200);
-  //occupato = true;
-}
+  occupato = true;
 }
 
 /*
@@ -50,14 +50,14 @@ function invokePythonScript(scriptName) {
 }
 
 function vola(res, secondo, endpoint, scriptName) {
-//	console.log('http://90.147.42.46:8091/drone/' + endpoint);
+  //	console.log('http://90.147.42.46:8091/drone/' + endpoint);
   checkStatus(res, secondo);
- /* if (secondo) {
-    setTimeout(function () {
-      http.get('http://90.147.42.46:8091/drone/' + endpoint, () => {});
-    }, 3000);
-  }*/
-  invokePythonScript(sciprtName); 
+  /* if (secondo) {
+     setTimeout(function () {
+       http.get('http://90.147.42.46:8091/drone/' + endpoint, () => {});
+     }, 3000);
+   }*/
+  invokePythonScript(sciprtName);
   occupato = false;
 }
 
